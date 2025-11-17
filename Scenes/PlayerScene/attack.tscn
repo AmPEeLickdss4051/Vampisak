@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://6c1rsnjhpgo1"]
+
+[ext_resource type="Script" uid="uid://c6hud02ut4bac" path="res://Scripts/PlayerScripts/Attack.gd" id="1_qw7wx"]
+[ext_resource type="Script" uid="uid://buvs4ggqldeup" path="res://Scripts/HitBox.gd" id="2_hqwf3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qw7wx"]
+albedo_color = Color(1, 0.05490196, 0.44313726, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_hqwf3"]
+material = SubResource("StandardMaterial3D_qw7wx")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5nywt"]
+
+[node name="Attack" type="Node3D"]
+script = ExtResource("1_qw7wx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
+mesh = SubResource("SphereMesh_hqwf3")
+
+[node name="HitBox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("2_hqwf3")
+team = "Player"
+metadata/_custom_type_script = "uid://buvs4ggqldeup"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+shape = SubResource("SphereShape3D_5nywt")
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://o1ywluk46kui"]
+
+[ext_resource type="Script" uid="uid://dokpp7500uxj6" path="res://Scripts/EnemyScript/basic_enemy.gd" id="1_j38mo"]
+[ext_resource type="Script" uid="uid://cjgta408ie6uh" path="res://Scripts/HurtBox.gd" id="1_oivom"]
+[ext_resource type="Script" uid="uid://buvs4ggqldeup" path="res://Scripts/HitBox.gd" id="2_j38mo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ch6oa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mbxfi"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_fecjr"]
+material = SubResource("StandardMaterial3D_mbxfi")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_j4esy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b0y2k"]
+size = Vector3(1, 1, 0.44)
+
+[node name="BasicEnemy" type="CharacterBody3D"]
+script = ExtResource("1_j38mo")
+HEALTH = 50
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ch6oa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_fecjr")
+
+[node name="HurtBox" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_oivom")
+metadata/_custom_type_script = "uid://cjgta408ie6uh"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtBox"]
+shape = SubResource("CapsuleShape3D_j4esy")
+
+[node name="HitBox" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("2_j38mo")
+damage = 50
+metadata/_custom_type_script = "uid://buvs4ggqldeup"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.43000004)
+shape = SubResource("BoxShape3D_b0y2k")
