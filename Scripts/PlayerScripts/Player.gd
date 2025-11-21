@@ -60,8 +60,8 @@ func Movement():
 		x_bot.global_rotation.y = lerp_angle(current_angel, target_angel, 0.2)
 		CurrentAnim = WALK
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, 5.0)
+		velocity.z = move_toward(velocity.z, 0, 5.0)
 		CurrentAnim = IDLE
 
 func look_at_mouse():
