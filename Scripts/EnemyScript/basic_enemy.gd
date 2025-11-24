@@ -2,7 +2,7 @@ class_name EnemyBasic
 extends CharacterBody3D
 
 @export var HEALTH = 10
-@export var SPEED = 5.0
+@export var SPEED = 2.0
 
 @onready var hurt_box: HurtBox = $HurtBox
 
