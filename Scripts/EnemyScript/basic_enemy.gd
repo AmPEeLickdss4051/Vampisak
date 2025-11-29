@@ -1,14 +1,18 @@
 class_name EnemyBasic
 extends CharacterBody3D
 
-@export var HEALTH = 10
+signal health_chenged(new_health)
+
+@export var MAX_HEALTH = 100
 @export var SPEED = 2.0
 
 @onready var hurt_box: HurtBox = $HurtBox
 
+var health
 var player_node: CharacterBody3D
 
 func _ready() -> void:
+	health = MAX_HEALTH
 	hurt_box.damaged.connect(take_damage)
 	find_player()
 
@@ -17,9 +21,9 @@ func _process(delta: float) -> void:
 	move_and_slide()
 
 func take_damage(damage_amount: int):
-	HEALTH -= damage_amount
-	print(HEALTH)
-	if HEALTH <= 0:
+	health -= damage_amount
+	emit_signal("health_chenged", health)
+	if health <= 0:
 		death()
 
 func death():

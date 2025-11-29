@@ -1,9 +1,11 @@
 extends CharacterBody3D
 
+signal health_changed(new_health)
+
 @export var SPEED = 5.0
 @export var JUMP_VELOCITY = 4.5
 @export var ATTACK_COOLDOWN = 0.5
-@export var HEALTH = 100
+@export var MAX_HEALTH = 100
 
 @onready var camera: Camera3D = $Camera3D
 @onready var animation: AnimationTree = $"X Bot/AnimationTree"
@@ -13,6 +15,7 @@ extends CharacterBody3D
 
 const ATTACK = preload("uid://6c1rsnjhpgo1")
 
+var health
 var direction = Vector3.ZERO
 var ray_origin = Vector3()
 var ray_end = Vector3()
@@ -22,6 +25,8 @@ enum {IDLE, WALK}
 var CurrentAnim = IDLE
 
 func _ready() -> void:
+	health = MAX_HEALTH
+	
 	add_to_group("player")
 	hurt_box.damaged.connect(take_damage)
 
@@ -87,9 +92,9 @@ func handle_anim():
 			animation.set("parameters/Movement/transition_request", "Walk")
 
 func take_damage(damage_amount: int):
-	HEALTH -= damage_amount
-	print(HEALTH)
-	if HEALTH <= 0:
+	health -= damage_amount
+	emit_signal("health_changed", health)
+	if health <= 0:
 		death()
 
 func death():

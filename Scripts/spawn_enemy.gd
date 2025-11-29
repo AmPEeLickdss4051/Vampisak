@@ -24,11 +24,10 @@ func get_random_position_in_gridmap() -> Vector3:
 	#var floor_cells = []
 	#var min_y = 0
 	#for cell in used_cells:
-		#if cell.y == min_y:  # Только ячейки на "полу"
+		#if cell.y == min_y:
 			#floor_cells.append(cell)
 	
 	#if floor_cells.size() == 0:
-		# Если нет ячеек на Y=0, используем все ячейки
 		#floor_cells = used_cells
 	
 	var random_cell = used_cells[randi() % used_cells.size()]
@@ -36,7 +35,6 @@ func get_random_position_in_gridmap() -> Vector3:
 	var world_position = gridmap_node.to_global(gridmap_node.map_to_local(random_cell))
 	world_position.y = 2.0
 	
-	# Добавляем небольшой случайный offset
 	#if gridmap_node.cell_size != Vector3.ZERO:
 		#var cell_size = gridmap_node.cell_size
 		#world_position.x += randf_range(-cell_size.x / 3, cell_size.x / 3)
@@ -50,10 +48,7 @@ func get_random_position_in_gridmap() -> Vector3:
 
 func _on_timer_timeout() -> void:
 	var unit = Unit.instantiate()
-	
-	# Получаем случайную позицию внутри GridMap
 	var spawn_position = get_random_position_in_gridmap()
-	print(spawn_position)
 	
 	if spawn_position:
 		get_parent().add_child(unit)
